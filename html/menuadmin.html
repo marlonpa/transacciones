@@ -1,0 +1,27 @@
+
+    <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+        <li class="active"><a href="{% url 'users:base' %}"><i class="la la-home"></i>
+            <span class="menu-title" data-i18n="">Administrativo</span></a>
+        </li>
+        <li class=" navigation-header">
+            <span data-i18n="nav.category.professional">Menu</span>
+            <i class="la la-ellipsis-h" data-toggle="tooltip" data-placement="right" data-original-title="Menu">
+            </i>
+        </li>
+    {% if request.user.is_staff or request.user.is_admin %}
+        <li class=" menu-item"><a href="{% url 'users:lus' %}">
+            <i class="la la-users"></i>
+            <span class="menu-title" data-i18n="">Usuarios</span>
+        </a>
+
+        </li>
+    {% endif %}
+        <li class=" menu-item"><a href="{% url 'transaccion:ltd' %}">
+            <i class="la la-users"></i>
+            <span class="menu-title" data-i18n="">Transacciones</span>
+        </a>
+
+        </li>
+
+    </ul>
+

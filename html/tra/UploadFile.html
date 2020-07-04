@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block tit_cont %}{{ tit_cont }}{% endblock %}
+{% block sub_tit_cont %}{{ sub_tit_cont }}{% endblock %}
+{% load humanize %}
+{% block script %}
+
+
+
+{% endblock script %}
+
+{% block contenido %}
+
+    <div class="content-wrapper">
+
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-12">
+                <div class="card pull-up">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <h4 class="card-title">{{ tit_cont }} {{ sub_tit_cont }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="card pull-up">
+
+            <div class="card-body">
+
+
+                    <form  class="form form-horizontal" role="form" enctype="multipart/form-data"
+                          method="POST" action="">
+
+                        <div class="form-body">
+
+                            {% csrf_token %}
+                            {{ form }}
+                            <input type="submit" value="Subir">
+                        </div>
+                    </form>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+{% endblock contenido %}
+
+

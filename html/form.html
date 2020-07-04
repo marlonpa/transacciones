@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block tit_cont %}{{ tit_cont }}{% endblock %}
+{% block sub_tit_cont %}{{ sub_tit_cont }}{% endblock %}
+{% load humanize %}
+{% block script %}
+    <script>
+        $("#id_t_fecha_hora").attr({
+            'type': "date",
+            format: 'Y-m-d H:i'
+        });
+
+        function obtener_entidad() {
+            var id = $('#id_idcliente').val();
+            if(id !== ""){
+                $.ajax({
+                    type: 'POST',
+                    url: '/com/cli/',
+                    dataType: 'json',
+                    data: {'pk': id},
+                    success: function (data) {
+                        // console.log(data);
+
+                        $('#id_identidad')
+                            .find('option')
+                            .remove()
+                            .end()
+                            .append(data['str_data']);
+                        // SEGUNDA OPCION
+                        /*$('#id_identidad')
+                            .find('option')
+                            .remove();
+                        for (dat in data['lis_data']){
+                            $('#id_identidad').append("<option value='"+dat[0]+"'>"+dat[1]+"</option>");
+                        } */
+                    }
+                });
+             }
+        }
+
+        function obtener_municipios() {
+            var id = $('#id_departamento').val();
+            if(id !== ""){
+                $.ajax({
+                    type: 'POST',
+                    url: '/obt/mun/',
+                    dataType: 'json',
+                    data: {'pk': id},
+                    success: function (data) {
+                        // console.log(data);
+
+                        $('#id_municipio')
+                            .find('option')
+                            .remove()
+                            .end()
+                            .append(data['str_data']);
+                        // SEGUNDA OPCION
+                        /*$('#id_identidad')
+                            .find('option')
+                            .remove();
+                        for (dat in data['lis_data']){
+                            $('#id_identidad').append("<option value='"+dat[0]+"'>"+dat[1]+"</option>");
+                        } */
+                    }
+                });
+            }
+        }
+
+        function obtener_recurso() {
+            var id = $('#id_idgrupo').val();
+                if(id !== ""){
+                    $.ajax({
+                        type: 'POST',
+                        url: '/com/grp/',
+                        dataType: 'json',
+                        data: {'pk': id},
+                        success: function (data) {
+                            // console.log(data);
+
+                            $('#id_id_recurso')
+                                .find('option')
+                                .remove()
+                                .end()
+                                .append(data['str_data']);
+                            // SEGUNDA OPCION
+                            /*$('#id_identidad')
+                                .find('option')
+                                .remove();
+                            for (dat in data['lis_data']){
+                                $('#id_identidad').append("<option value='"+dat[0]+"'>"+dat[1]+"</option>");
+                            } */
+                        }
+                    });
+                }
+        }
+    </script>
+
+
+
+{% endblock script %}
+
+{% block contenido %}
+
+    <div class="content-wrapper">
+
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-12">
+                <div class="card pull-up">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <h4 class="card-title">{{ tit_cont }} {{ sub_tit_cont }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="card pull-up">
+
+            <div class="card-body">
+
+                {% if form.is_multipart %}
+                    <form id="masivo" class="form form-horizontal" role="form" enctype="multipart/form-data"
+                          method="POST" action=".">
+                {% else %}
+                    <form class="form form-horizontal" role="form" method="POST" action=".">
+                {% endif %}
+                    <div class="form-body">
+
+                        {% crispy form %}
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+{% endblock contenido %}
